@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\NationalityResource\Pages;
-use App\Filament\Resources\NationalityResource\RelationManagers;
-use App\Models\Nationality;
+use App\Filament\Resources\CompanyTypeResource\Pages;
+use App\Filament\Resources\CompanyTypeResource\RelationManagers;
+use App\Models\CompanyType;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 
-class NationalityResource extends Resource
+class CompanyTypeResource extends Resource
 {
-    protected static ?string $model = Nationality::class;
+    protected static ?string $model = CompanyType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationGroup = 'Configuraciones';
 
@@ -29,8 +29,12 @@ class NationalityResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->label('Nacionalidad')
-                    ->maxLength(100),
+                    ->label('Nombre')
+                    ->maxLength(60),
+                Forms\Components\TextInput::make('abbreviation')
+                    ->required()
+                    ->label('Tipo')
+                    ->maxLength(5),
             ]);
     }
 
@@ -40,6 +44,10 @@ class NationalityResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('abbreviation')
+                    ->label('Tipo')
                     ->sortable()
                     ->searchable(),
             ])
@@ -67,20 +75,20 @@ class NationalityResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Nacionalizaciones';
+        return 'Tipo empresa';
     }
 
     public static function getPluralLabel(): ?string
     {
-        return 'Nacionalizaciones';
+        return 'Tipo empresa';
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNationalities::route('/'),
-            'create' => Pages\CreateNationality::route('/create'),
-            'edit' => Pages\EditNationality::route('/{record}/edit'),
+            'index' => Pages\ListCompanyTypes::route('/'),
+            'create' => Pages\CreateCompanyType::route('/create'),
+            'edit' => Pages\EditCompanyType::route('/{record}/edit'),
         ];
     }
 }

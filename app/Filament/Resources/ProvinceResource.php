@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\NationalityResource\Pages;
-use App\Filament\Resources\NationalityResource\RelationManagers;
-use App\Models\Nationality;
+use App\Filament\Resources\ProvinceResource\Pages;
+use App\Filament\Resources\ProvinceResource\RelationManagers;
+use App\Models\Province;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,11 +15,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 
-class NationalityResource extends Resource
+class ProvinceResource extends Resource
 {
-    protected static ?string $model = Nationality::class;
+    protected static ?string $model = Province::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
     protected static ?string $navigationGroup = 'Configuraciones';
 
@@ -29,8 +29,8 @@ class NationalityResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->label('Nacionalidad')
-                    ->maxLength(100),
+                    ->label('Provincia')
+                    ->maxLength(80),
             ]);
     }
 
@@ -52,9 +52,6 @@ class NationalityResource extends Resource
                 DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
             ]);
     }
 
@@ -67,20 +64,20 @@ class NationalityResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Nacionalizaciones';
+        return 'Provincias';
     }
 
     public static function getPluralLabel(): ?string
     {
-        return 'Nacionalizaciones';
+        return 'Provincias';
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNationalities::route('/'),
-            'create' => Pages\CreateNationality::route('/create'),
-            'edit' => Pages\EditNationality::route('/{record}/edit'),
+            'index' => Pages\ListProvinces::route('/'),
+            'create' => Pages\CreateProvince::route('/create'),
+            'edit' => Pages\EditProvince::route('/{record}/edit'),
         ];
     }
 }
